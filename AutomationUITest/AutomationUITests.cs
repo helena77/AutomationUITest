@@ -149,7 +149,7 @@ namespace AutomationUITest
         }
 
         [TestMethod]
-        public void MovieMvc_MovieApp_WhenCreatedCancle_ReturnsASameIndextViewAsBefore()
+        public void MovieMvc_MovieApp_WhenCreateCancled_ReturnsASameIndextViewAsBefore()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
@@ -174,6 +174,21 @@ namespace AutomationUITest
             var element = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
 
             Assert.IsTrue(element.Contains("When Harry Met Sally II"));
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenEditCancled_ReturnsASameIndextViewAsBefore()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
+            _driver.FindElement(By.LinkText("Back to List")).Click();
+
+            var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+
+            Assert.AreEqual("Index - Movie App", _driver.Title);
+            Assert.AreEqual(oriMovie, movie);
         }
 
         [TestMethod]
