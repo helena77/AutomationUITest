@@ -149,6 +149,21 @@ namespace AutomationUITest
         }
 
         [TestMethod]
+        public void MovieMvc_MovieApp_WhenCreatedCancle_ReturnsASameIndextViewAsBefore()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Create");
+            _driver.FindElement(By.LinkText("Back to List")).Click();
+
+            var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+            Assert.AreEqual("Index - Movie App", _driver.Title);
+            Assert.AreEqual(oriMovieList.Count, movieList.Count);
+        }
+
+        [TestMethod]
         public void MovieMvc_MovieApp_WhenEdited_ReturnsAIndexViewWithUpdatedMovie()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/1");
@@ -185,5 +200,7 @@ namespace AutomationUITest
             Assert.AreEqual("Index - Movie App", _driver.Title);
             Assert.AreEqual(oriMovieList.Count - 1, movieList.Count);
         }
+
+
     }
 }
