@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
@@ -77,6 +78,14 @@ namespace AutomationUITest
             _driver.FindElement(By.ClassName("navbar-brand")).Click();
 
             Assert.AreEqual("Index - Movie App", _driver.Title);
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenExecuted_ReturnsAMovieList_ContainsAsasgMovies()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var list = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+            Assert.AreEqual(5, list.Count);
 
         }
     }
