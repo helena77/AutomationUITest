@@ -168,7 +168,7 @@ namespace AutomationUITest
 
             var element = _driver.FindElement(By.CssSelector("[class='col-sm-10']")).Text;
 
-            Assert.IsTrue(element.Contains("When Harry Met Sally"));
+            Assert.IsTrue(element.Contains("When Harry Met Sally II"));
         }
 
         //[TestMethod]
