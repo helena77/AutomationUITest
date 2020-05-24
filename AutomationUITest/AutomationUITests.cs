@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.VisualStudio.TestPlatform.CoreUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomationUITest
 {
@@ -101,6 +103,18 @@ namespace AutomationUITest
         }
 
         [TestMethod]
+        public void MovieMvc_MovieApp_WhenClickEdit_ReturnsAEditView()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            //var wait = new WebDriverWait(_driver, System.TimeSpan.FromSeconds(5));
+            //var link = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.LinkText("/Movies/Edit/6")));
+            _driver.FindElement(By.PartialLinkText("Edit")).Click();
+            //link.Click();
+
+            Assert.AreEqual("Edit - Movie App", _driver.Title);
+        }
+
+        [TestMethod]
         public void MovieMvc_MovieApp_WhenCreated_ReturnsAIndexViewWithNewMovie()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
@@ -118,5 +132,13 @@ namespace AutomationUITest
             Assert.AreEqual("Index - Movie App", _driver.Title);
             Assert.AreEqual(oriMovieList.Count + 1, movieList.Count);
         }
+
+        //[TestMethod]
+        //public void MovieMvc_MovieApp_WhenDeleted_ReturnsAIndexViewWithRestMovie()
+        //{
+        //    _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+        //    var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+        //}
     }
 }
