@@ -84,7 +84,7 @@ namespace AutomationUITest
         }
 
         [TestMethod]
-        public void MovieMvc_MovieApp_WhenExecuted_ReturnsAMovieList_ContainsAsasgMovies()
+        public void MovieMvc_MovieApp_WhenExecuted_ReturnsAMovieList()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var list = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
@@ -139,7 +139,7 @@ namespace AutomationUITest
             _driver.FindElement(By.Id("Title")).SendKeys("New Movie");
             _driver.FindElement(By.Id("ReleaseDate")).SendKeys("01/01/2020");
             _driver.FindElement(By.Id("Genre")).SendKeys("novel");
-            _driver.FindElement(By.Id("Price")).SendKeys("50.00");
+            _driver.FindElement(By.Id("Price")).SendKeys("5.99");
             _driver.FindElement(By.XPath("//input[@value='Create']")).Click();
             
             var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
@@ -166,14 +166,15 @@ namespace AutomationUITest
         [TestMethod]
         public void MovieMvc_MovieApp_WhenEdited_ReturnsAIndexViewWithUpdatedMovie()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
-            _driver.FindElement(By.Id("Title")).SendKeys(" II");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");           
+            _driver.FindElement(By.LinkText("Edit")).Click();
 
+            _driver.FindElement(By.Id("Title")).SendKeys(" II");
             _driver.FindElement(By.XPath("//input[@value='Save']")).Click();
 
-            var element = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+            var updatedMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
 
-            Assert.IsTrue(element.Contains("When Harry Met Sally II"));
+            Assert.IsTrue(updatedMovie.Contains("II"));
         }
 
         [TestMethod]
@@ -182,7 +183,7 @@ namespace AutomationUITest
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
+            _driver.FindElement(By.LinkText("Edit")).Click();
             _driver.FindElement(By.LinkText("Back to List")).Click();
 
             var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
@@ -194,17 +195,20 @@ namespace AutomationUITest
         [TestMethod]
         public void MovieMvc_MovieApp_WhenDetailExecuted_ReturnsAVieOfMovieDetail()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr td")).Text;
+            _driver.FindElement(By.LinkText("Details")).Click();
 
-            var element = _driver.FindElement(By.CssSelector("[class='col-sm-10']")).Text;
+            var element = _driver.FindElement(By.CssSelector("[class='row']")).Text;
 
-            Assert.IsTrue(element.Contains("When Harry Met Sally II"));
+            Assert.IsTrue(element.Contains(oriMovie));
         }
 
         [TestMethod]
          public void MovieMvc_MovieApp_WhenEditedInDetailPage_ReturnsAViewOfEdit()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            _driver.FindElement(By.LinkText("Details")).Click();
             _driver.FindElement(By.LinkText("Edit")).Click();
 
             Assert.AreEqual("Edit - Movie App", _driver.Title);
@@ -215,8 +219,8 @@ namespace AutomationUITest
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+            _driver.FindElement(By.LinkText("Details")).Click();
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
             _driver.FindElement(By.LinkText("Back to List")).Click();
 
             var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
@@ -230,8 +234,8 @@ namespace AutomationUITest
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+            _driver.FindElement(By.XPath("//table[@class='table']/tbody/tr[last()]/td/a[last()]")).Click();
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Delete/4");
             _driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
 
             var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
@@ -245,8 +249,8 @@ namespace AutomationUITest
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+            _driver.FindElement(By.LinkText("Delete")).Click();
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
             _driver.FindElement(By.LinkText("Back to List")).Click();
 
             var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
