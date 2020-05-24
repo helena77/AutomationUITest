@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -102,7 +103,20 @@ namespace AutomationUITest
         [TestMethod]
         public void MovieMvc_MovieApp_WhenCreated_ReturnsAIndexViewWithNewMovie()
         {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
 
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Create");
+            _driver.FindElement(By.Id("Title")).SendKeys("New Movie");
+            _driver.FindElement(By.Id("ReleaseDate")).SendKeys("01/01/2020");
+            _driver.FindElement(By.Id("Genre")).SendKeys("novel");
+            _driver.FindElement(By.Id("Price")).SendKeys("50.00");
+            _driver.FindElement(By.XPath("//input[@value='Create']")).Click();
+            
+            var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+            Assert.AreEqual("Index - Movie App", _driver.Title);
+            Assert.AreEqual(oriMovieList.Count + 1, movieList.Count);
         }
     }
 }
