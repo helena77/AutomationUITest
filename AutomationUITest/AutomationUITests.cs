@@ -106,10 +106,7 @@ namespace AutomationUITest
         public void MovieMvc_MovieApp_WhenClickEdit_ReturnsAEditView()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
-            //var wait = new WebDriverWait(_driver, System.TimeSpan.FromSeconds(5));
-            //var link = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.LinkText("/Movies/Edit/6")));
             _driver.FindElement(By.PartialLinkText("Edit")).Click();
-            //link.Click();
 
             Assert.AreEqual("Edit - Movie App", _driver.Title);
         }
