@@ -7,10 +7,10 @@ using OpenQA.Selenium.Chrome;
 namespace AutomationUITest
 {
     [TestClass]
-    public class BingAutomatedUITests : IDisposable
+    public class AutomatedUITests : IDisposable
     {
         private readonly IWebDriver _driver;
-        public BingAutomatedUITests()
+        public AutomatedUITests()
         {
             _driver = new ChromeDriver(Directory.GetCurrentDirectory());
         }
@@ -47,9 +47,19 @@ namespace AutomationUITest
             input.SendKeys("seattle");
             //input.SendKeys(Keys.Enter);
             input.Submit();
-           
+
 
             Assert.AreEqual("seattle - Bing", _driver.Title);
         }
+
+        [TestMethod]
+        public void MovieMvc_WhenExecuted_ReturnAResultView()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/");
+
+            Assert.AreEqual("Home Page - Movie App", _driver.Title);
+        }
+
+
     }
 }
