@@ -149,7 +149,7 @@ namespace AutomationUITest
         }
 
         [TestMethod]
-        public void MovieMvc_MovieApp_WhenCreateCancled_ReturnsASameIndextViewAsBefore()
+        public void MovieMvc_MovieApp_WhenCreateCanceled_ReturnsASameIndextViewAsBefore()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
@@ -166,7 +166,7 @@ namespace AutomationUITest
         [TestMethod]
         public void MovieMvc_MovieApp_WhenEdited_ReturnsAIndexViewWithUpdatedMovie()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/1");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
             _driver.FindElement(By.Id("Title")).SendKeys(" II");
 
             _driver.FindElement(By.XPath("//input[@value='Save']")).Click();
@@ -177,12 +177,12 @@ namespace AutomationUITest
         }
 
         [TestMethod]
-        public void MovieMvc_MovieApp_WhenEditCancled_ReturnsASameIndextViewAsBefore()
+        public void MovieMvc_MovieApp_WhenEditCanceled_ReturnsASameIndextViewAsBefore()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/1");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
             _driver.FindElement(By.LinkText("Back to List")).Click();
 
             var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
@@ -194,7 +194,7 @@ namespace AutomationUITest
         [TestMethod]
         public void MovieMvc_MovieApp_WhenDetailExecuted_ReturnsAVieOfMovieDetail()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/1");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
 
             var element = _driver.FindElement(By.CssSelector("[class='col-sm-10']")).Text;
 
@@ -204,14 +204,14 @@ namespace AutomationUITest
         [TestMethod]
          public void MovieMvc_MovieApp_WhenEditedInDetailPage_ReturnsAViewOfEdit()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/1");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
             _driver.FindElement(By.LinkText("Edit")).Click();
 
             Assert.AreEqual("Edit - Movie App", _driver.Title);
         }
 
         [TestMethod]
-        public void MovieMvc_MovieApp_WhenDetailCancled_ReturnsASameIndextViewAsBefore()
+        public void MovieMvc_MovieApp_WhenDetailCanceled_ReturnsASameIndextViewAsBefore()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
@@ -231,13 +231,28 @@ namespace AutomationUITest
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Delete/1");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Delete/4");
             _driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
 
             var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
 
             Assert.AreEqual("Index - Movie App", _driver.Title);
             Assert.AreEqual(oriMovieList.Count - 1, movieList.Count);
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenDeleteCancled_ReturnsASameIndextViewAsBefore()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.FindElement(By.LinkText("Back to List")).Click();
+
+            var movieList = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
+            Assert.AreEqual("Index - Movie App", _driver.Title);
+            Assert.AreEqual(oriMovieList.Count, movieList.Count);
         }
 
 
