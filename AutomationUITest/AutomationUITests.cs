@@ -204,10 +204,25 @@ namespace AutomationUITest
         [TestMethod]
          public void MovieMvc_MovieApp_WhenEditedInDetailPage_ReturnsAViewOfEdit()
         {
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/1");
             _driver.FindElement(By.LinkText("Edit")).Click();
 
             Assert.AreEqual("Edit - Movie App", _driver.Title);
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenDetailCancled_ReturnsASameIndextViewAsBefore()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.FindElement(By.LinkText("Back to List")).Click();
+
+            var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+
+            Assert.AreEqual("Index - Movie App", _driver.Title);
+            Assert.AreEqual(oriMovie, movie);
         }
 
         [TestMethod]
