@@ -53,12 +53,23 @@ namespace AutomationUITest
         }
 
         [TestMethod]
-        public void MovieMvc_WhenExecuted_ReturnAResultView()
+        public void MovieMvc_Index_WhenExecuted_ReturnsAResultView()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/");
 
             Assert.AreEqual("Home Page - Movie App", _driver.Title);
         }
+
+        [TestMethod]
+        public void MovieMvc_Index_WhenNavigateToPrivacy_ReturnsAResultViewOfPrivacy()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/");
+            _driver.FindElement(By.PartialLinkText("Privacy")).Click();
+
+            Assert.AreEqual("Privacy Policy - Movie App", _driver.Title);
+
+        }
+
 
 
     }
