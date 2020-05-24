@@ -182,7 +182,7 @@ namespace AutomationUITest
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var oriMovie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
 
-            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/2");
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/1");
             _driver.FindElement(By.LinkText("Back to List")).Click();
 
             var movie = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
@@ -199,6 +199,15 @@ namespace AutomationUITest
             var element = _driver.FindElement(By.CssSelector("[class='col-sm-10']")).Text;
 
             Assert.IsTrue(element.Contains("When Harry Met Sally II"));
+        }
+
+        [TestMethod]
+         public void MovieMvc_MovieApp_WhenEditedInDetailPage_ReturnsAViewOfEdit()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/2");
+            _driver.FindElement(By.LinkText("Edit")).Click();
+
+            Assert.AreEqual("Edit - Movie App", _driver.Title);
         }
 
         [TestMethod]
