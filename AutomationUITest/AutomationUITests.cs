@@ -161,6 +161,16 @@ namespace AutomationUITest
             Assert.IsTrue(element.Contains("When Harry Met Sally II"));
         }
 
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenDetailExecuted_ReturnsAVieOfMovieDetail()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Details/1");
+
+            var element = _driver.FindElement(By.CssSelector("[class='col-sm-10']")).Text;
+
+            Assert.IsTrue(element.Contains("When Harry Met Sally"));
+        }
+
         //[TestMethod]
         //public void MovieMvc_MovieApp_WhenDeleted_ReturnsAIndexViewWithRestMovie()
         //{
