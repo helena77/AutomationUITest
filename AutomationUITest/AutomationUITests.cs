@@ -148,6 +148,19 @@ namespace AutomationUITest
             Assert.AreEqual(oriMovieList.Count + 1, movieList.Count);
         }
 
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenEdited_ReturnsAIndexViewWithUpdatedMovie()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies/Edit/1");
+            _driver.FindElement(By.Id("Title")).SendKeys(" II");
+
+            _driver.FindElement(By.XPath("//input[@value='Save']")).Click();
+
+            var element = _driver.FindElement(By.CssSelector("[class='table'] tbody tr")).Text;
+
+            Assert.IsTrue(element.Contains("When Harry Met Sally II"));
+        }
+
         //[TestMethod]
         //public void MovieMvc_MovieApp_WhenDeleted_ReturnsAIndexViewWithRestMovie()
         //{
