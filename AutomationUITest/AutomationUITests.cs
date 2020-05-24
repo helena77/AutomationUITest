@@ -70,7 +70,14 @@ namespace AutomationUITest
 
         }
 
+        [TestMethod]
+        public void MovieMvc_Index_WhenNavigateToMovieApp_ReturnsAResultViewOfMovies()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/");
+            _driver.FindElement(By.ClassName("navbar-brand")).Click();
 
+            Assert.AreEqual("Index - Movie App", _driver.Title);
 
+        }
     }
 }
