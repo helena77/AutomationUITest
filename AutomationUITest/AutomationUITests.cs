@@ -121,6 +121,15 @@ namespace AutomationUITest
         }
 
         [TestMethod]
+        public void MovieMvc_MovieApp_WhenClickDelete_ReturnsADeleteView()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            _driver.FindElement(By.PartialLinkText("Delete")).Click();
+
+            Assert.AreEqual("Delete - Movie App", _driver.Title);
+        }
+
+        [TestMethod]
         public void MovieMvc_MovieApp_WhenCreated_ReturnsAIndexViewWithNewMovie()
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
