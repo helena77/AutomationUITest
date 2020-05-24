@@ -85,7 +85,23 @@ namespace AutomationUITest
         {
             _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
             var list = _driver.FindElements(By.CssSelector("[class='table'] tbody tr"));
+
             Assert.AreEqual(5, list.Count);
+
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenClickCreate_ReturnsACreateView()
+        {
+            _driver.Navigate().GoToUrl("https://localhost:5001/Movies");
+            _driver.FindElement(By.PartialLinkText("Create")).Click();
+
+            Assert.AreEqual("Create - Movie App", _driver.Title);
+        }
+
+        [TestMethod]
+        public void MovieMvc_MovieApp_WhenCreated_ReturnsAIndexViewWithNewMovie()
+        {
 
         }
     }
